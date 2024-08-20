@@ -1,0 +1,59 @@
+name: CI_CD
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+jobs:
+  deploy_dev:
+    if: github.event.release.target_commitish == 'dev'
+    runs-on: ubuntu-latest
+    env:
+      VITE_API_URL: ${{ secrets.VITE_API_URL_DEV }}
+
+    steps:
+      - name: Repository checkout
+        uses: actions/checkout@v2
+      - name: Connects to VPS via SSH
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{secrets.SERVER_HOST}}
+          username: ${{secrets.SERVER_USER}}
+          password: ${{secrets.SERVER_PASS}}
+          script: |
+            cd /home/matrix-code/admin
+            git checkout dev --force
+            git pull
+            npm i
+            export PORT=3004
+            npm run build
+
+            cp -r /home/matrix-code/admin/dist/* /home/app-admin-dev-planify/htdocs/admin.dev.planify.app.br
+            cd /home/app-admin-dev-planify/htdocs/admin.dev.planify.app.br
+            sudo systemctl reload nginx
+
+  deploy_prod:
+    if: github.event.release.target_commitish == 'main'
+    runs-on: ubuntu-latest
+    env:
+      VITE_API_URL: ${{ secrets.VITE_API_URL }}
+
+    steps:
+      - name: Repository checkout
+        uses: actions/checkout@v2
+      - name: Connects to VPS via SSH
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{secrets.SERVER_HOST}}
+          username: ${{secrets.SERVER_USER}}
+          password: ${{secrets.SERVER_PASS}}
+          script: |
+            cd /home/matrix-code/admin
+            git checkout main --force
+            git pull
+            npm i
+            export PORT=3003
+            npm run build
+
+            cp -r /home/matrix-code/admin/dist/* /home/app-admin-planify/htdocs/admin.planify.app.br
+            cd /home/app-admin-planify/htdocs/admin.planify.app.br
+            sudo systemctl reload nginx
