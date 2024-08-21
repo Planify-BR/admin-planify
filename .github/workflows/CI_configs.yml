@@ -20,14 +20,13 @@ jobs:
           username: ${{secrets.SERVER_USER}}
           password: ${{secrets.SERVER_PASS}}
           script: |
-            cd /home/matrix-code/admin
+            cd /home/matrix-code/admin-planify
             git checkout dev --force
             git pull
             npm i
-            export PORT=3004
             npm run build
 
-            cp -r /home/matrix-code/admin/dist/* /home/app-admin-dev-planify/htdocs/admin.dev.planify.app.br
+            cp -r /home/matrix-code/admin-planify/dist/* /home/app-admin-dev-planify/htdocs/admin.dev.planify.app.br
             cd /home/app-admin-dev-planify/htdocs/admin.dev.planify.app.br
             sudo systemctl reload nginx
 
@@ -47,13 +46,12 @@ jobs:
           username: ${{secrets.SERVER_USER}}
           password: ${{secrets.SERVER_PASS}}
           script: |
-            cd /home/matrix-code/admin
+            cd /home/matrix-code/admin-planify
             git checkout main --force
             git pull
             npm i
-            export PORT=3003
             npm run build
 
-            cp -r /home/matrix-code/admin/dist/* /home/app-admin-planify/htdocs/admin.planify.app.br
+            cp -r /home/matrix-code/admin-planify/dist/* /home/app-admin-planify/htdocs/admin.planify.app.br
             cd /home/app-admin-planify/htdocs/admin.planify.app.br
             sudo systemctl reload nginx
