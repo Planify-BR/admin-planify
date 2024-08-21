@@ -57,11 +57,6 @@ jobs:
             npm i
             npm run build
 
-<<<<<<< HEAD
-            rm -rf /home/app-admin-planify/htdocs/admin.planify.app.br/*
-
-=======
->>>>>>> main
             cp -r /home/matrix-code/admin-planify/dist/* /home/app-admin-planify/htdocs/admin.planify.app.br
             cd /home/app-admin-planify/htdocs/admin.planify.app.br
             sudo systemctl reload nginx
