@@ -25,10 +25,11 @@ jobs:
             git checkout dev --force
             git pull
             npm i
-            npm run build
 
             export VITE_API_URL=${{ secrets.VITE_API_URL_DEV }}
             export VITE_API_CORE_URL=${{ secrets.VITE_API_CORE_URL_DEV }}
+
+            npm run build
 
             cp -r /home/matrix-code/admin-planify/dist/* /home/app-admin-dev-planify/htdocs/admin.dev.planify.app.br
             cd /home/app-admin-dev-planify/htdocs/admin.dev.planify.app.br
