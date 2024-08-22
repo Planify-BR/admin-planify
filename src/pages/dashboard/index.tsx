@@ -1,18 +1,17 @@
-import { useEffect } from 'react';
 import TemplatePage from './template';
 import useDashboard from './hooks';
 
 export default function Dashboard() {
   const hookParams = useDashboard();
-  const { getDashboard } = hookParams;
+  // const { getDashboard } = hookParams;
 
   const sharedProps = {
-    ...hookParams
+    ...hookParams,
   };
 
-  useEffect(() => {
-      getDashboard();
-  },[]);
+  // useEffect(() => {
+  //     getDashboard();
+  // },[]);
 
   return (
     <>

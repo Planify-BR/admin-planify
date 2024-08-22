@@ -1,11 +1,34 @@
-import { List, ListItemButton, ListItemIcon, ListItemText, Stack } from '@mui/material';
+import { Box, List, ListItemButton, ListItemIcon, ListItemText, Stack } from '@mui/material';
 import PaidIcon from '@mui/icons-material/Paid';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import { useNavigate } from 'react-router-dom';
+import { useGlobalContext } from '@root/contexts/globalContext/useGlobalContext';
+import { useState } from 'react';
 
 export function SidebarMenu() {
   const navigate = useNavigate();
+  const [selectedItem, setSelectedItem] = useState('Planos');
 
+  const { theme } = useGlobalContext();
+
+  const menuOptions = [
+    {
+      title: 'Planos',
+      icon: <PaidIcon />,
+      action: () => {
+        setSelectedItem('Planos');
+        navigate('/plans');
+      },
+    },
+    {
+      title: 'Assinaturas',
+      icon: <LoyaltyIcon />,
+      action: () => {
+        setSelectedItem('Assinaturas');
+        navigate('/subscriptions');
+      },
+    },
+  ];
 
   return (
     <Stack
@@ -13,7 +36,8 @@ export function SidebarMenu() {
       width="100%"
       p={3}
       sx={{
-        background: '#fff',
+        background: theme?.defaultColor,
+        color: '#fff',
       }}
     >
       <List
@@ -25,36 +49,29 @@ export function SidebarMenu() {
         //   </ListSubheader>
         // }
       >
-        <ListItemButton>
-          <ListItemIcon>
-            <PaidIcon />
-          </ListItemIcon>
-          <ListItemText primary="Planos" onClick={() => navigate('/plans')} />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <LoyaltyIcon />
-          </ListItemIcon>
-          <ListItemText primary="Assinaturas" onClick={() => navigate('/subscriptions')}/>
-        </ListItemButton>
+        {menuOptions?.map((item, index) => (
+          <Box
+            key={index}
+            sx={{
+              '& .MuiListItemButton-root': {
+                borderRadius: 1,
+                background: selectedItem === item?.title ? '#fff' : 'transparent',
+                color: selectedItem === item?.title ? theme?.defaultColor : '#fff',
 
-        {/* <ListItemButton onClick={handleClick}>
-          <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-          <ListItemText primary="Inbox" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton> */}
-        {/* <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
+                '& svg': {
+                  fill: selectedItem === item?.title ? theme?.defaultColor : '#fff',
+                },
+              },
+            }}
+          >
+            <ListItemButton onClick={item?.action}>
               <ListItemIcon>
-                <StarBorder />
+                <PaidIcon />
               </ListItemIcon>
-              <ListItemText primary="Starred" />
+              <ListItemText primary={item?.title} />
             </ListItemButton>
-          </List>
-        </Collapse> */}
+          </Box>
+        ))}
       </List>
     </Stack>
   );

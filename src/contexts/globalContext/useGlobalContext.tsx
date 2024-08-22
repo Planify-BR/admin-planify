@@ -29,7 +29,7 @@ const GlobalContext = createContext<IGlobalContext>({
 
 export const GlobalProvider = ({ children }: IGlobalProviderProps) => {
   const [theme, setTheme] = useState<ITheme>({
-    defaultColor: '#980909',
+    defaultColor: '#7d0606',
     secondaryColor: '#F18932',
   });
 
