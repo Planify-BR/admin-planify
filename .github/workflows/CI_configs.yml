@@ -7,6 +7,9 @@ jobs:
   deploy_dev:
     if: github.event.release.target_commitish == 'dev'
     runs-on: ubuntu-latest
+    env:
+      VITE_API_URL: ${{ secrets.VITE_API_URL_DEV }}
+      VITE_API_CORE_URL: ${{ secrets.VITE_API_CORE_URL_DEV }}
 
     steps:
       - name: Repository checkout
@@ -54,6 +57,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VITE_API_URL: ${{ secrets.VITE_API_URL }}
+      VITE_API_CORE_URL: ${{ secrets.VITE_API_CORE_URL }}
 
     steps:
       - name: Repository checkout
@@ -70,7 +74,7 @@ jobs:
             git pull
             npm i
 
-            export VITE_API_URL=${{ secrets.VITE_API_URL_DEV }}
+            export VITE_API_URL=${{ secrets.VITE_API_URL }}
             export VITE_API_CORE_URL=${{ secrets.VITE_API_CORE_URL }}
 
             npm run build
