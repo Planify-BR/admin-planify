@@ -9,7 +9,7 @@ export function SidebarMenu() {
   const navigate = useNavigate();
   const [selectedItem, setSelectedItem] = useState('Planos');
 
-  const { theme } = useGlobalContext();
+  const { theme, lightenColor } = useGlobalContext();
 
   const menuOptions = [
     {
@@ -50,10 +50,10 @@ export function SidebarMenu() {
         // }
       >
         {menuOptions?.map((item, index) => (
-          <Box
-            key={index}
-            sx={{
-              '& .MuiListItemButton-root': {
+          <Box mb={0.5} key={index}>
+            <ListItemButton
+              onClick={item?.action}
+              sx={{
                 borderRadius: 1,
                 background: selectedItem === item?.title ? '#fff' : 'transparent',
                 color: selectedItem === item?.title ? theme?.defaultColor : '#fff',
@@ -61,10 +61,18 @@ export function SidebarMenu() {
                 '& svg': {
                   fill: selectedItem === item?.title ? theme?.defaultColor : '#fff',
                 },
-              },
-            }}
-          >
-            <ListItemButton onClick={item?.action}>
+
+                '&:hover': {
+                  color: selectedItem === item?.title ? theme?.defaultColor : '#fff',
+                  background:
+                    selectedItem === item?.title ? '#fff' : lightenColor(theme?.defaultColor, 0.5),
+
+                  '& svg': {
+                    fill: selectedItem === item?.title ? theme?.defaultColor : '#fff',
+                  },
+                },
+              }}
+            >
               <ListItemIcon>
                 <PaidIcon />
               </ListItemIcon>
