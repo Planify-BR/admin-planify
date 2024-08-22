@@ -31,6 +31,24 @@ jobs:
             cd /home/app-admin-dev-planify/htdocs/admin.dev.planify.app.br
             sudo systemctl reload nginx
 
+      - name: Send Discord Notification
+        if: success()
+        run: |
+          RELEASE_VERSION=$(jq -r '.release.tag_name // "No version specified"' $GITHUB_EVENT_PATH)
+          RELEASE_AUTHOR=$(jq -r '.release.author.login // "Unknown"' $GITHUB_EVENT_PATH)
+          RELEASE_DESCRIPTION=$(jq -r '.release.body // "No description provided"' $GITHUB_EVENT_PATH)
+          CURRENT_TIME=$(date -u +"%Y-%m-%d")
+
+          # Escape newlines for JSON, but keep them as \n for Discord formatting
+          FORMATTED_DESCRIPTION=$(echo "$RELEASE_DESCRIPTION" | sed 's/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g')
+
+          PAYLOAD=$(jq -n \
+                        --arg content $'🚀 Novo deploy de ADMIN DEV finalizado!\n\n[RELEASE]: '"${RELEASE_VERSION}"$'\n[AUTOR]: '"${RELEASE_AUTHOR}"$'\n[ALTERAÇÕES]:\n'"${FORMATTED_DESCRIPTION}"$'\n[DATA]: '"${CURRENT_TIME}" \
+                        --arg username "StatusReport BOT" \
+                        '{content: $content, username: $username}')
+
+          curl -H "Content-Type: application/json" -X POST -d "${PAYLOAD}" ${{ secrets.DISCORD_WEBHOOK_URL }}
+
   deploy_prod:
     if: github.event.release.target_commitish == 'main'
     runs-on: ubuntu-latest
@@ -60,3 +78,21 @@ jobs:
             cp -r /home/matrix-code/admin-planify/dist/* /home/app-admin-planify/htdocs/admin.planify.app.br
             cd /home/app-admin-planify/htdocs/admin.planify.app.br
             sudo systemctl reload nginx
+
+      - name: Send Discord Notification
+        if: success()
+        run: |
+          RELEASE_VERSION=$(jq -r '.release.tag_name // "No version specified"' $GITHUB_EVENT_PATH)
+          RELEASE_AUTHOR=$(jq -r '.release.author.login // "Unknown"' $GITHUB_EVENT_PATH)
+          RELEASE_DESCRIPTION=$(jq -r '.release.body // "No description provided"' $GITHUB_EVENT_PATH)
+          CURRENT_TIME=$(date -u +"%Y-%m-%d")
+
+          # Escape newlines for JSON, but keep them as \n for Discord formatting
+          FORMATTED_DESCRIPTION=$(echo "$RELEASE_DESCRIPTION" | sed 's/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g')
+
+          PAYLOAD=$(jq -n \
+                        --arg content $'🚀 Novo deploy de ADMIN PROD finalizado!\n\n[RELEASE]: '"${RELEASE_VERSION}"$'\n[AUTOR]: '"${RELEASE_AUTHOR}"$'\n[ALTERAÇÕES]:\n'"${FORMATTED_DESCRIPTION}"$'\n[DATA]: '"${CURRENT_TIME}" \
+                        --arg username "StatusReport BOT" \
+                        '{content: $content, username: $username}')
+
+          curl -H "Content-Type: application/json" -X POST -d "${PAYLOAD}" ${{ secrets.DISCORD_WEBHOOK_URL }}
