@@ -14,6 +14,7 @@ interface IAuthContext {
   setIsLoading: (value: boolean) => void;
   handleGlobalLoader: () => void;
   handleGlobalLoaderNavigation: () => void;
+  setUserToken: (token: string) => void;
 }
 
 interface IAuthProviderProps {
@@ -29,6 +30,7 @@ const AuthContext = createContext<IAuthContext>({
   setIsLoading: () => {},
   handleGlobalLoader: () => {},
   handleGlobalLoaderNavigation: () => {},
+  setUserToken: () => {},
 });
 
 export const AuthProvider = ({ children }: IAuthProviderProps) => {
@@ -36,6 +38,14 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [token, setToken] = useState(Cookies.get('token') ?? '');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  function setUserToken(token) {
+    if (token) {
+      Cookies.set('token', token);
+      setToken(token);
+      setIsAuthenticated(true);
+    }
+  }
 
   useEffect(() => {
     if (token) {
@@ -47,6 +57,8 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     if (isAuthenticated) {
       // getCurrentPartner(); // uncomment if you need this
       handleGlobalLoader();
+    } else {
+      navigate('/');
     }
   }, [isAuthenticated]);
 
@@ -74,6 +86,18 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     }, 1000);
   };
 
+  //  useEffect(() => {
+  //    if (user && token) {
+  //      setIsAuthenticated(true);
+  //    }
+  //  }, [user, token]);
+
+  useEffect(() => {
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, [token]);
+
   return (
     <AuthContext.Provider
       value={{
@@ -85,6 +109,7 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
         setIsLoading,
         handleGlobalLoader,
         handleGlobalLoaderNavigation,
+        setUserToken,
       }}
     >
       {children}

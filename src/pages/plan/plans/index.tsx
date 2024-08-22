@@ -7,12 +7,12 @@ export default function Plans() {
   const { getPlans } = hookParams;
 
   const sharedProps = {
-    ...hookParams
+    ...hookParams,
   };
 
   useEffect(() => {
-      getPlans();
-  },[]);
+    getPlans();
+  }, []);
 
   return (
     <>

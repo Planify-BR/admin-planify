@@ -3,7 +3,7 @@ import Logo from '@assets/logo.svg';
 import Bg from '@assets/bg.jpg';
 
 export default function TemplatePage({ ...sharedProps }) {
-  const { handleSubmit, signIn, setValue } = sharedProps;
+  const { validateIfIsDisabledButton, handleSubmit, signIn, setValue } = sharedProps;
 
   return (
     <Box minHeight="100vh" pt={30}>
@@ -55,7 +55,11 @@ export default function TemplatePage({ ...sharedProps }) {
             />
           </Grid>
           <Grid lg={12} sm={12} md={12}>
-            <Button size="medium" type="submit">
+            <Button
+              size="medium"
+              type={!validateIfIsDisabledButton() ? 'submit' : 'button'}
+              disabled={validateIfIsDisabledButton()}
+            >
               Acessar
             </Button>
           </Grid>

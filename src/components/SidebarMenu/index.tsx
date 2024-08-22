@@ -1,24 +1,12 @@
-import {
-  Collapse,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  ListSubheader,
-  Stack,
-} from '@mui/material';
-import { ExpandLess, StarBorder, ExpandMore } from '@mui/icons-material';
+import { List, ListItemButton, ListItemIcon, ListItemText, Stack } from '@mui/material';
 import PaidIcon from '@mui/icons-material/Paid';
 import LoyaltyIcon from '@mui/icons-material/Loyalty';
-
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function SidebarMenu() {
-  const [open, setOpen] = useState(true);
+  const navigate = useNavigate();
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+
   return (
     <Stack
       height="100vh"
@@ -41,13 +29,13 @@ export function SidebarMenu() {
           <ListItemIcon>
             <PaidIcon />
           </ListItemIcon>
-          <ListItemText primary="Planos" />
+          <ListItemText primary="Planos" onClick={() => navigate('/plans')} />
         </ListItemButton>
         <ListItemButton>
           <ListItemIcon>
             <LoyaltyIcon />
           </ListItemIcon>
-          <ListItemText primary="Assinaturas" />
+          <ListItemText primary="Assinaturas" onClick={() => navigate('/subscriptions')}/>
         </ListItemButton>
 
         {/* <ListItemButton onClick={handleClick}>

@@ -24,8 +24,21 @@ export default function AppRoutes() {
 
   if (isAuthenticated && isLoading) {
     return (
-      <Box height="100%" pt="50vh">
-        <CircularProgress size={100} />
+      <Box
+        height="100%"
+        width="100%"
+        pt="40vh"
+        margin="0 auto"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <CircularProgress
+          size={100}
+          sx={{
+            color: theme?.defaultColor,
+          }}
+        />
       </Box>
     );
   }

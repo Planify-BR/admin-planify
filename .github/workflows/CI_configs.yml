@@ -7,8 +7,6 @@ jobs:
   deploy_dev:
     if: github.event.release.target_commitish == 'dev'
     runs-on: ubuntu-latest
-    env:
-      VITE_API_URL: ${{ secrets.VITE_API_URL_DEV }}
 
     steps:
       - name: Repository checkout
@@ -25,6 +23,9 @@ jobs:
             git pull
             npm i
             npm run build
+
+            export VITE_API_URL=${{ secrets.VITE_API_URL_DEV }}
+            export VITE_API_CORE_URL=${{ secrets.VITE_API_CORE_URL_DEV }}
 
             cp -r /home/matrix-code/admin-planify/dist/* /home/app-admin-dev-planify/htdocs/admin.dev.planify.app.br
             cd /home/app-admin-dev-planify/htdocs/admin.dev.planify.app.br
@@ -50,6 +51,10 @@ jobs:
             git checkout main --force
             git pull
             npm i
+
+            export VITE_API_URL=${{ secrets.VITE_API_URL_DEV }}
+            export VITE_API_CORE_URL=${{ secrets.VITE_API_CORE_URL }}
+
             npm run build
 
             cp -r /home/matrix-code/admin-planify/dist/* /home/app-admin-planify/htdocs/admin.planify.app.br
