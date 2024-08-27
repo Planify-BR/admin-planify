@@ -36,7 +36,8 @@ export function SidebarMenu() {
       width="100%"
       p={3}
       sx={{
-        background: theme?.defaultColor,
+        // borderRadius: '0 20px 20px 0',
+        // background: theme?.defaultColor,
         color: '#fff',
       }}
     >
