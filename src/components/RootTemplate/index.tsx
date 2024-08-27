@@ -5,6 +5,7 @@ import { Navigate } from 'react-router-dom';
 // import { useGlobalContext } from '@root/contexts/globalContext/useGlobalContext';
 import { Box, Grid, Hidden } from '@mui/material';
 import { SidebarMenu } from '../SidebarMenu';
+import bgImage from '@assets/bg_man.jpg';
 
 type RootTemplateProps = {
   children: ReactNode;
@@ -26,7 +27,16 @@ export function RootTemplate({ children }: RootTemplateProps) {
     <>
       <Grid container>
         <Hidden lgDown={!showMobileMenu}>
-          <Grid lg={2} md={2}>
+          <Grid
+            lg={2}
+            md={2}
+            sx={{
+              borderRadius: '0 20px 20px 0',
+              backgroundSize: 'inherit',
+              backgroundPosition: 'left center',
+              backgroundImage: `url(${bgImage})`,
+            }}
+          >
             <SidebarMenu />
           </Grid>
         </Hidden>

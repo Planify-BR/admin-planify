@@ -18,7 +18,7 @@ export default function AppRoutes() {
       (isAuthenticated && location?.pathname === '/') ||
       (isAuthenticated && location?.pathname === '/resetPassword')
     ) {
-      navigate('/dashboard');
+      navigate('/plans');
     }
   }, [isAuthenticated, location]);
 
