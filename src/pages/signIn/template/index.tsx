@@ -1,12 +1,19 @@
 import { Box, Button, Grid, TextField } from '@mui/material';
 import Logo from '@assets/logo.svg';
-import Bg from '@assets/bg.jpg';
+import ScreenBg from '@assets/bg_man.jpg';
 
 export default function TemplatePage({ ...sharedProps }) {
   const { validateIfIsDisabledButton, handleSubmit, signIn, setValue } = sharedProps;
 
   return (
-    <Box minHeight="100vh" pt={30}>
+    <Box
+      minHeight="100vh"
+      pt={30}
+      sx={{
+        backgroundImage: `url(${ScreenBg})`,
+        backgroundSize: 'cover',
+      }}
+    >
       <form onSubmit={handleSubmit(signIn)}>
         <Grid
           container
@@ -17,7 +24,6 @@ export default function TemplatePage({ ...sharedProps }) {
           textAlign="center"
           p={5}
           sx={{
-            backgroundImage: `url(${Bg})`,
             minHeight: '450px',
             minWidth: '200px',
             '& .MuiInputBase-root': {
