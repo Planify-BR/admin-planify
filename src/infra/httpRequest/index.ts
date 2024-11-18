@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { getCustomerClient } from '@root/shared/functions';
 import axios, { AxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 
@@ -10,14 +11,28 @@ export default class HttpClient {
   api() {
     const TOKEN = Cookies.get('token') ?? null;
     const DEFAULT_BASE_URL = import.meta.env.VITE_API_URL;
+    const CUSTOMER_CLIENT = getCustomerClient();
 
-    return axios.create({
+    const instance = axios.create({
       baseURL: this.baseUrl ?? DEFAULT_BASE_URL,
       headers: {
         'Content-Type': 'application/json',
         Authorization: TOKEN && `Bearer ${TOKEN}`,
+        'x-secret': CUSTOMER_CLIENT ?? 'TDJFT',
       },
     });
+
+    instance.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response && error.response.status === 401) {
+          Cookies.remove('token');
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return instance;
   }
 
   async get(path: string) {

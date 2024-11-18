@@ -1,11 +1,17 @@
-// Adicione seus tipos e interfaces aqui. Exemplos:
+export interface Plan {
+  id: string;
+  name: string;
+  price: number;
+  features: string[];
+  active: boolean;
+}
 
-export type TPlansSample = {
-  name: string,
-  age: number
-};
+export interface CreatePlanDTO {
+  name: string;
+  price: number;
+  features: string[];
+}
 
-export interface IPlansUserData {
-  user: TPlansSample,
-  email: string
+export interface UpdatePlanDTO extends CreatePlanDTO {
+  active: boolean;
 }

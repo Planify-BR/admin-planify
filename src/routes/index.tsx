@@ -1,20 +1,26 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { useAuthStore } from "@contexts/authContext";
-import Layout from "@components/Layout";
-import Login from "@pages/Login";
-import Dashboard from "@pages/Dashboard";
-import Plans from "@pages/Plans";
-import Subscriptions from "@pages/Subscriptions";
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuthContext } from '@contexts/authContext';
 
-function PrivateRoute({ children }: { children: React.ReactNode }) {
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+// Pages
+import Dashboard from '@pages/dashboard';
+import Plans from '@pages/plans';
+import Subscriptions from '@pages/subscriptions';
+import Login from '@pages/login';
+import Layout from '@components/Layout';
+
+interface PrivateRouteProps {
+  children: React.ReactNode;
+}
+
+function PrivateRoute({ children }: PrivateRouteProps) {
+  const { isAuthenticated } = useAuthContext();
   return isAuthenticated ? <Layout>{children}</Layout> : <Navigate to="/login" />;
 }
 
-function App() {
+export default function AppRoutes() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route
@@ -43,8 +49,6 @@ function App() {
         />
         <Route path="/" element={<Navigate to="/dashboard" />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
-
-export default App;

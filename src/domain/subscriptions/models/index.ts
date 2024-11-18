@@ -1,11 +1,17 @@
-// Adicione seus tipos e interfaces aqui. Exemplos:
+import { Plan } from '@domain/plans/models';
+import { User } from '@domain/auth/models';
 
-export type TSubscriptionsSample = {
-  name: string,
-  age: number
-};
+export interface Subscription {
+  id: string;
+  user: User;
+  plan: Plan;
+  status: 'active' | 'inactive';
+  startDate: string;
+  endDate?: string;
+}
 
-export interface ISubscriptionsUserData {
-  user: TSubscriptionsSample,
-  email: string
+export interface SubscriptionStats {
+  totalSubscriptions: number;
+  activeSubscriptions: number;
+  monthlyRevenue: number;
 }

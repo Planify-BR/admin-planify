@@ -8,7 +8,7 @@ export default function use{{properCase pageName}}() {
   const [pageData, setPageData] = useState()
 
   const navigate = useNavigate(); 
-  const { control, handleSubmit, watch, setValue } = useForm();
+  const { control, handleSubmit, watch, setValue, register } = useForm();
   const watchFields = watch();
 
   const [isLoading, setIsLoading] = useState(false); 
@@ -21,7 +21,8 @@ export default function use{{properCase pageName}}() {
   return { 
     isLoading, 
     setIsLoading,
-    control, 
+    control,
+    register,
     handleSubmit, 
     watch, 
     setValue, 
