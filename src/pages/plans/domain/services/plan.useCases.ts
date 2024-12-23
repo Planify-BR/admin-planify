@@ -15,15 +15,14 @@ export default class PlanServices {
     return response?.data;
   }
 
-  // async getById(id: string) {
-  //   const response = await service.get(`/dashboard/${id}`);
+  async createPlan(data: any) {
+    const response = await service.post(`/payment-plans`, data);
 
-  //   return response?.data;
-  // }
+    return response?.data;
+  }
 
-  // async create(data: any) {
-  //   const response = await service.post(`/dashboard`, data);
-
-  //   return response?.data;
-  // }
+  async createPermissions(data: any) {
+    const response = await service.post(`/permissions`, data);
+    return response?.data;
+  }
 }
