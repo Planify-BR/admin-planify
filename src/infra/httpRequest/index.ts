@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getCustomerClient } from '@root/shared/functions';
-import axios, { AxiosRequestConfig } from 'axios';
-import Cookies from 'js-cookie';
+import axios, { AxiosRequestConfig } from "axios";
+import Cookies from "js-cookie";
 
 export default class HttpClient {
   constructor(readonly baseUrl?: string) {}
@@ -9,16 +8,16 @@ export default class HttpClient {
   private isRequestPending: boolean = false;
 
   api() {
-    const TOKEN = Cookies.get('token') ?? null;
+    const TOKEN = Cookies.get("token") ?? null;
     const DEFAULT_BASE_URL = import.meta.env.VITE_API_URL;
-    const CUSTOMER_CLIENT = getCustomerClient();
+    const CUSTOMER_CLIENT = "planify";
 
     const instance = axios.create({
       baseURL: this.baseUrl ?? DEFAULT_BASE_URL,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: TOKEN && `Bearer ${TOKEN}`,
-        'x-secret': CUSTOMER_CLIENT ?? 'TDJFT',
+        "x-secret": CUSTOMER_CLIENT ?? "TDJFT",
       },
     });
 
@@ -26,7 +25,7 @@ export default class HttpClient {
       (response) => response,
       (error) => {
         if (error.response && error.response.status === 401) {
-          Cookies.remove('token');
+          Cookies.remove("token");
         }
         return Promise.reject(error);
       }
@@ -49,7 +48,7 @@ export default class HttpClient {
 
       return response;
     } catch (error) {
-      console.error('error', error);
+      console.error("error", error);
       this.isRequestPending = false;
     }
   }
@@ -59,7 +58,7 @@ export default class HttpClient {
       const response = await this.api().post(`${path}`, data, config);
       return response;
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
 
       return error;
     }
@@ -70,7 +69,7 @@ export default class HttpClient {
       const response = await this.api().put(`${path}`, data, config);
       return response;
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   }
 
@@ -79,7 +78,7 @@ export default class HttpClient {
       const response = await this.api().patch(`${path}`, data);
       return response;
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   }
 
@@ -88,7 +87,7 @@ export default class HttpClient {
       const response = await this.api().delete(`${path}`, data);
       return response;
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   }
 }

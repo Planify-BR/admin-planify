@@ -7,7 +7,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default function RootTemplate({ children }: LayoutProps) {
   const navigate = useNavigate();
   const { logout, user } = useAuthStore();
 
