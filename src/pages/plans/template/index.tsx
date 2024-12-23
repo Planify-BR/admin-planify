@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table } from "@/components/Table";
-import { Plus } from "lucide-react";
+import { Plus, ArrowLeft, ArrowRight } from "lucide-react";
 import { TableColumns } from "../mocks/TableColumns";
-import { useState } from "react";
 
 export function Template({ ...sharedProps }) {
   const {
@@ -16,18 +15,11 @@ export function Template({ ...sharedProps }) {
     formData,
     setFormData,
     setEditingPlan,
+    currentStep,
     scopes,
+    nextStep,
+    prevStep,
   } = sharedProps;
-
-  const [currentStep, setCurrentStep] = useState(1);
-
-  const nextStep = () => {
-    setCurrentStep((prev) => Math.min(prev + 1, 3));
-  };
-
-  const prevStep = () => {
-    setCurrentStep((prev) => Math.max(prev - 1, 1));
-  };
 
   const renderStep = () => {
     switch (currentStep) {
@@ -283,34 +275,50 @@ export function Template({ ...sharedProps }) {
         </button>
       </div>
 
-      <Table columns={TableColumns()} data={plans} />
+      <Table columns={TableColumns({ onEdit: openEditModal })} data={plans} />
 
       {isModalOpen && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
-          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <div
+            className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+            onClick={() => setIsModalOpen(false)}
+          >
             <div className="fixed inset-0 transition-opacity" aria-hidden="true">
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-            <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+            <div
+              className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6"
+              onClick={(e) => e.stopPropagation()}
+            >
               <div>
                 <h3 className="text-lg leading-6 font-medium text-gray-900">{editingPlan ? "Editar Plano" : "Novo Plano"}</h3>
                 <form className="mt-5 space-y-4">
                   {renderStep()}
                   <div className="flex justify-between mt-4">
                     {currentStep > 1 && (
-                      <button type="button" onClick={prevStep} className="text-sm text-gray-500">
-                        Voltar
+                      <button
+                        type="button"
+                        onClick={prevStep}
+                        className="p-2 text-white bg-primary hover:bg-red-600 rounded-full transition-colors"
+                        title="Voltar"
+                      >
+                        <ArrowLeft size={24} />
                       </button>
                     )}
                     {currentStep < 3 ? (
-                      <button type="button" onClick={nextStep} className="text-sm text-primary">
-                        Próximo
+                      <button
+                        type="button"
+                        onClick={nextStep}
+                        className="p-2 text-white bg-primary hover:bg-red-600 rounded-full transition-colors"
+                        title="Próximo"
+                      >
+                        <ArrowRight size={24} />
                       </button>
                     ) : (
                       <button
                         type="button"
                         onClick={handleSubmit}
-                        className="w-full inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-red-600"
+                        className="w-1/2 inline-flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-red-600"
                       >
                         Criar Plano
                       </button>
