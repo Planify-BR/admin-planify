@@ -1,6 +1,6 @@
 import Dashboard from "@/pages/dashboard";
 import Plans from "@/pages/plans";
-import Login from "@/pages/singnIn";
+import Login from "@/pages/signIn";
 
 const routes: {
   path: string;

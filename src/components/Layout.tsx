@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { LayoutDashboard, Users, Package, LogOut } from "lucide-react";
 import { useAuthStore } from "@/contexts/authContext";
 
@@ -9,11 +9,12 @@ interface LayoutProps {
 
 export default function RootTemplate({ children }: LayoutProps) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { logout, user } = useAuthStore();
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -46,21 +47,27 @@ export default function RootTemplate({ children }: LayoutProps) {
           <nav className="mt-5 px-2">
             <button
               onClick={() => navigate("/dashboard")}
-              className="group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 w-full"
+              className={`group flex items-center px-2 py-2 text-base font-medium rounded-md ${
+                location.pathname === "/dashboard" ? "bg-red-600 text-white" : "text-gray-600"
+              } ${location.pathname === "/dashboard" ? "hover:bg-red-700" : "hover:bg-gray-50"} w-full`}
             >
               <LayoutDashboard className="mr-3 h-6 w-6" />
               Painel
             </button>
             <button
               onClick={() => navigate("/plans")}
-              className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 w-full"
+              className={`mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md ${
+                location.pathname === "/plans" ? "bg-red-600 text-white" : "text-gray-600"
+              } ${location.pathname === "/plans" ? "hover:bg-red-700" : "hover:bg-gray-50"} w-full`}
             >
               <Package className="mr-3 h-6 w-6" />
               Planos
             </button>
             <button
               onClick={() => navigate("/subscriptions")}
-              className="mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900 w-full"
+              className={`mt-1 group flex items-center px-2 py-2 text-base font-medium rounded-md ${
+                location.pathname === "/subscriptions" ? "bg-red-600 text-white" : "text-gray-600"
+              } ${location.pathname === "/subscriptions" ? "hover:bg-red-700" : "hover:bg-gray-50"} w-full`}
             >
               <Users className="mr-3 h-6 w-6" />
               Assinaturas

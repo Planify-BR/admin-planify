@@ -1,32 +1,21 @@
-import { create } from 'zustand';
-import { User } from '@domain/types';
+import { create } from "zustand";
 
 interface AuthState {
-  user: User | null;
+  token: string | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  setToken: (token: string) => void;
   logout: () => void;
 }
 
-// Simulated user data
-const MOCK_USER = {
-  id: '1',
-  email: 'admin@example.com',
-  name: 'Admin User'
-};
-
 export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  isAuthenticated: false,
-  login: async (email: string, password: string) => {
-    // Simulate API call
-    if (email === 'admin@example.com' && password === 'admin123') {
-      set({ user: MOCK_USER, isAuthenticated: true });
-    } else {
-      throw new Error('Invalid credentials');
-    }
+  token: localStorage.getItem("auth-token"),
+  isAuthenticated: !!localStorage.getItem("auth-token"),
+  setToken: (token: string) => {
+    localStorage.setItem("auth-token", token);
+    set({ token, isAuthenticated: true });
   },
   logout: () => {
-    set({ user: null, isAuthenticated: false });
+    localStorage.removeItem("auth-token");
+    set({ token: null, isAuthenticated: false });
   },
 }));

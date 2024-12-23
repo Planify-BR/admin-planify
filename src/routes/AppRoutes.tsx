@@ -1,18 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import routes from "./routes";
 import RootTemplate from "@/components/Layout";
-// import NotFound from "@pages/notFound";
+import { useAuthStore } from "@/contexts/authContext";
 
 export default function AppRoutes() {
-  const isAuthenticated = true;
-
-  // if (isLoading) {
-  //   return (
-  //     <MuiBox height="100%" pt="50vh">
-  //       <MuiLoader size={100} />
-  //     </MuiBox>
-  //   );
-  // }
+  const { isAuthenticated } = useAuthStore();
 
   return (
     <Routes>
@@ -35,7 +27,6 @@ export default function AppRoutes() {
           }
         />
       ))}
-      {/* <Route path="*" element={<NotFound />} /> */}
     </Routes>
   );
 }
