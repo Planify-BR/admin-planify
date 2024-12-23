@@ -35,7 +35,18 @@ export function TableColumns({ onEdit }) {
       align: "center",
       id: "scopes",
       label: "Permissões",
-      render: (rowData: TPlan) => <>{rowData?.scopes?.map((item) => item)}</>,
+      width: "300px",
+      render: (rowData: TPlan) => (
+        <div className="w-[300px] overflow-hidden mx-auto">
+          <div className="flex flex-wrap gap-1 justify-center">
+            {rowData?.scopes?.map((item, index) => (
+              <span key={index} className="inline-block px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full whitespace-nowrap">
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+      ),
     },
     {
       align: "center",
