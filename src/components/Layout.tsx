@@ -23,7 +23,7 @@ export default function RootTemplate({ children }: LayoutProps) {
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="flex-shrink-0 flex items-center">
-                <Package className="h-8 w-8 text-indigo-600" />
+                <Package className="h-8 w-8 text-red-600" />
                 <span className="ml-2 text-xl font-bold text-gray-900">Painel Admin</span>
               </div>
             </div>

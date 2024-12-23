@@ -35,8 +35,8 @@ export default function TemplatePage({ ...sharedProps }) {
         {stats.map((item) => (
           <div key={item.name} className="relative bg-white pt-5 px-4 pb-12 sm:pt-6 sm:px-6 shadow rounded-lg overflow-hidden">
             <dt>
-              <div className="absolute bg-indigo-500 rounded-md p-3">
-                <item.icon className="h-6 w-6 text-white" aria-hidden="true" />
+              <div className="absolute bg-primary rounded-md p-3">
+                <item.icon className="h-6 w-6 text-primary" aria-hidden="true" />
               </div>
               <p className="ml-16 text-sm font-medium text-gray-500 truncate">{item.name}</p>
             </dt>

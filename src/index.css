@@ -4,5 +4,5 @@
 
 .bg-primary {
   background-color: #df1d35;
-  color: #fff;
+  color: #fff !important;
 }

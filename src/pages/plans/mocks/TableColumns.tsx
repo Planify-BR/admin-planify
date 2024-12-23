@@ -42,8 +42,8 @@ export function TableColumns({ onEdit }) {
       id: "actions",
       label: "Ações",
       render: (rowData: TPlan) => (
-        <div className="flex items-center justify-center gap-2">
-          <button onClick={() => onEdit(rowData)} className="p-2 text-gray-600 hover:text-primary" title="Editar plano">
+        <div className="flex items-center justify-end gap-2">
+          <button onClick={() => onEdit(rowData)} className="p-2 text-gray-600  hover:text-primary" title="Editar plano">
             <Edit size={18} />
           </button>
           <label className="inline-flex items-center cursor-pointer">
