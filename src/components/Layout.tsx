@@ -19,12 +19,12 @@ export default function RootTemplate({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="flex-shrink-0 flex items-center">
                 <Package className="h-8 w-8 text-red-600" />
-                <span className="ml-2 text-xl font-bold text-gray-900">Painel Admin</span>
+                <span className="ml-2 text-xl font-bold text-red-600">Planify Admin</span>
               </div>
             </div>
             <div className="flex items-center">
