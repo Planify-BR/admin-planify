@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Edit2, Plus, ToggleLeft } from "lucide-react";
+import { Table } from "@/components/Table";
+import { Plus } from "lucide-react";
+import { TableColumns } from "../mocks/TableColumns";
 
 export function Template({ ...sharedProps }) {
   const { setIsModalOpen, plans, openEditModal, togglePlanStatus, isModalOpen, handleSubmit, editingPlan, formData, setFormData, setEditingPlan } =
     sharedProps;
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -17,44 +20,7 @@ export function Template({ ...sharedProps }) {
         </button>
       </div>
 
-      <div className="mt-8 flex flex-col">
-        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preço</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Recursos</th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {plans.map((plan: any) => (
-                    <tr key={plan.id}>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{plan.name}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">R${plan.price}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{plan.active ? "Ativo" : "Inativo"}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{plan.features.join(", ")}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button onClick={() => openEditModal(plan)} className="p-1 rounded-md hover:bg-gray-100">
-                          <Edit2 className="h-4 w-4 text-gray-500" />
-                        </button>
-                        <button onClick={() => togglePlanStatus(plan.id)} className="p-1 rounded-md hover:bg-gray-100">
-                          <ToggleLeft className="h-4 w-4 text-gray-500" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <Table columns={TableColumns()} data={plans} />
       {isModalOpen && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">

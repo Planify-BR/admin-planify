@@ -8,16 +8,17 @@ export default class HttpClient {
   private isRequestPending: boolean = false;
 
   api() {
-    const TOKEN = Cookies.get("token") ?? null;
-    const DEFAULT_BASE_URL = import.meta.env.VITE_API_URL;
-    const CUSTOMER_CLIENT = "planify";
+    const TEMP_TOKEN = import.meta.env.VITE_TEMP_TOKEN;
+    const TOKEN = Cookies.get("token") || TEMP_TOKEN || null;
+    const DEFAULT_BASE_URL = import.meta.env.VITE_API_CORE_URL;
+    const CUSTOMER_CLIENT = import.meta.env.CUSTOMER_CLIENT;
 
     const instance = axios.create({
       baseURL: this.baseUrl ?? DEFAULT_BASE_URL,
       headers: {
         "Content-Type": "application/json",
         Authorization: TOKEN && `Bearer ${TOKEN}`,
-        "x-secret": CUSTOMER_CLIENT ?? "TDJFT",
+        "x-secret": CUSTOMER_CLIENT ?? "Planify",
       },
     });
 
